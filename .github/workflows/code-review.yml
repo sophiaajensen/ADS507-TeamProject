@@ -5,8 +5,9 @@ on:
     branches: [main]
 
 jobs:
-  review:
+  review-python:
     runs-on: ubuntu-latest
+    name: Python Code Review
 
     steps:
       - name: Checkout Code
@@ -30,3 +31,31 @@ jobs:
       - name: Run Security Scan with bandit
         run: bandit -r .
 
+  review-sql:
+    runs-on: ubuntu-latest
+    name: SQL Code Review
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Check MySQL SQL Files
+        uses: bytebase/sql-review-action@main
+        with:
+          override-file-path: ./sql-review-override.yml
+          database-type: MYSQL
+          file-pattern: ^migration/mysql/.*\.sql$
+
+      - name: Check PostgreSQL SQL Files
+        uses: bytebase/sql-review-action@main
+        with:
+          override-file-path: ./sql-review-override.yml
+          database-type: POSTGRES
+          file-pattern: ^migration/postgres/.*\.sql$
+
+      - name: Check TiDB SQL Files
+        uses: bytebase/sql-review-action@main
+        with:
+          override-file-path: ./sql-review-override.yml
+          database-type: TIDB
+          file-pattern: ^migration/tidb/.*\.sql$
