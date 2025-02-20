@@ -1,0 +1,32 @@
+name: Code Review Checks
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install Dependencies
+        run: |
+          pip install flake8 pytest bandit
+
+      - name: Lint Code with flake8
+        run: flake8 .
+
+      - name: Run Tests with pytest
+        run: pytest || exit 1
+
+      - name: Run Security Scan with bandit
+        run: bandit -r .
+
