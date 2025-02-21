@@ -6,8 +6,22 @@ Authors:
 - Davood Aein
 
 ---------------------
-[Insert Title Here]
+
+Real-Time Risk Monitoring Database for Breast Cancer and Heart Disease
+
 ---------------------
+
+
+Project Details
+
+- MySQL version 8.0
+- Hosted on Azure Database for MySQL flexible server
+- Preferred comprehensive tool: MySQL Workbench 8.0 CE
+- Character Set Server: UTF8MB4
+
+
+---------------------
+
 
 Database replication instructions
 
@@ -36,7 +50,33 @@ Option 2: MySQL Command Line
 3c) Once you have changed line 1 of the SQL script, you must also change line 2 to the same name changed in line 1
 4) To verify if the database import was successful, type "SHOW databases;" without quotation marks and press enter
 
+
+
 ---------------------
+
+
+Database pipeline monitoring
+
+
+To access data pipeline for this project, we recommend utilizing MySQL Workbench's built in performance dashboard as it is versitile and available on all MySQL Workbench installations.
+
+Steps to accessing the monitoring capabilities:
+
+1) Open MySQL and connect to your database instance
+2) On the left side, under the "Navigator" section, click on "Administration"
+3) Under the "Performance" section, select "Dashboard"
+
+This will bring up the graphical interface for monitoring the data pipeline.
+
+For this project, we utilized this monitoring system to maintain efficient network traffic, SQL statement performance, and how efficient data is being written to the system.
+
+For monitoring basic network traffic, we used "Incoming Network Traffic" and "Outgoing Network Traffic."
+
+In addition to the monitoring system, we utilized the MySQL Workbench Explain feature to understand and improve query performance.
+
+
+---------------------
+
 
 Database table information
 
@@ -88,18 +128,16 @@ Source Link: https://archive.ics.uci.edu/dataset/15/breast+cancer+wisconsin+orig
 
 Additional Information:
 Title: Wisconsin Diagnostic Breast Cancer (WDBC)
+Title: Wisconsin Prognostic Breast Cancer (WPBC)
 
-Number of instances: 569 
+Number of instances: 763
 
 Number of attributes: 32 (ID, diagnosis, 30 real-valued input features)
 
 Attribute information
 
-1) ID number
-2) Diagnosis (M = malignant, B = benign)
-3-32)
-
-Ten real-valued features are computed for each cell nucleus:
+1) Patient ID number
+2-31) Ten real-valued features are computed for each cell nucleus:
 
 	a) radius (mean of distances from center to points on the perimeter)
 	b) texture (standard deviation of gray-scale values)
@@ -117,73 +155,24 @@ how these features are computed.
 
 The mean, standard error, and "worst" or largest (mean of the three
 largest values) of these features were computed for each image,
-resulting in 30 features.  For instance, field 3 is Mean Radius, field
-13 is Radius SE, field 23 is Worst Radius.
+resulting in 30 features.  For instance, field 2 is Mean Radius, field
+12 is Radius SE, field 22 is Worst Radius.
+
+32) Class (Diagnostic or Prognostic)
+33) Diagnosis (M = malignant, B = benign)
+34) Outcome (R = recur, N = nonrecur)
+35) Time (recurrence time if field 2 = R, disease-free time if 
+	 field 2 = N)
 
 All feature values are recoded with four significant digits.
 
-Missing attribute values: none
-
-Class distribution: 357 benign, 212 malignant
+Class distribution: 357 benign, 212 malignant, 151 nonrecur, 47 recur
 
 
 ---------------------
 
 
-bc_prognostic
-
-Source Link: https://archive.ics.uci.edu/dataset/15/breast+cancer+wisconsin+original
-
-Additional Information:
-Title: Wisconsin Prognostic Breast Cancer (WPBC)
-
-Number of instances: 198
-
-Number of attributes: 34 (ID, outcome, 32 real-valued input features)
-
-Attribute information
-
-1) ID number
-2) Outcome (R = recur, N = nonrecur)
-3) Time (recurrence time if field 2 = R, disease-free time if 
-	field 2	= N)
-4-33) Ten real-valued features are computed for each cell nucleus:
-
-	a) radius (mean of distances from center to points on the perimeter)
-	b) texture (standard deviation of gray-scale values)
-	c) perimeter
-	d) area
-	e) smoothness (local variation in radius lengths)
-	f) compactness (perimeter^2 / area - 1.0)
-	g) concavity (severity of concave portions of the contour)
-	h) concave points (number of concave portions of the contour)
-	i) symmetry 
-	j) fractal dimension ("coastline approximation" - 1)
-
-Several of the papers listed above contain detailed descriptions of
-how these features are computed. 
-
-The mean, standard error, and "worst" or largest (mean of the three
-largest values) of these features were computed for each image,
-resulting in 30 features.  For instance, field 4 is Mean Radius, field
-14 is Radius SE, field 24 is Worst Radius.
-
-Values for features 4-33 are recoded with four significant digits.
-
-34) Tumor size - diameter of the excised tumor in centimeters
-35) Lymph node status - number of positive axillary lymph nodes
-observed at time of surgery
-
-Missing attribute values: 
-	Lymph node status is missing in 4 cases.
-
-Class distribution: 151 nonrecur, 47 recur
-
-
----------------------
-
-
-heart_disease_[%all tables%]
+heart_disease
 
 Source Link: https://archive.ics.uci.edu/dataset/45/heart+disease
 
@@ -200,19 +189,54 @@ Number of Instances:
 Number of Attributes: 76 (including the predicted attribute)
 
 Attribute Information:
-   -- Only 14 used
-      -- 1. #3  (age)       
-      -- 2. #4  (sex)       
-      -- 3. #9  (cp)        
-      -- 4. #10 (trestbps)  
-      -- 5. #12 (chol)      
-      -- 6. #16 (fbs)       
-      -- 7. #19 (restecg)   
-      -- 8. #32 (thalach)   
-      -- 9. #38 (exang)     
-      -- 10. #40 (oldpeak)   
-      -- 11. #41 (slope)     
-      -- 12. #44 (ca)        
-      -- 13. #51 (thal)      
-      -- 14. #58 (num)       (the predicted attribute)
+      -- 0. my_row_id (index)
+      -- 1. patient_id
+      -- 2. #3  (age)       
+      -- 3. #4  (sex)       
+      -- 4. #9  (chest_pain_type)        
+      -- 5. #10 (resting_bp)  
+      -- 6. #12 (cholesterol)      
+      -- 7. #16 (fasting_blood_sugar)       
+      -- 8. #19 (resting_ecg)   
+      -- 9. #32 (max_heart_rate)   
+      -- 10. #38 (exercise_angina)     
+      -- 11. #40 (st_depression)   
+      -- 12. #41 (st_slope)     
+      -- 13. #44 (num_major_vessels)        
+      -- 14. #51 (thalassemia)      
+      -- 15. #58 (heart_disease)       (the predicted attribute)
+      -- 16. (Source)
+
+
+---------------------
+
+
+heart_failure
+
+Source Link: https://archive.ics.uci.edu/dataset/519/heart+failure+clinical+records
+
+Additional Information:
+Title: Heart Failue Clinical Records
+
+Number of Instances: 299
+
+Number of Attributes: 14
+
+Attribute Information:
+0) my_row_id (index)
+1) patient_id
+2) age
+3) anaemia
+4) creatinine_phosphokinase
+5) diabetes
+6) ejection_fraction
+7) high_blood_pressure
+8) platelets
+9) serum_creatinine
+10) serum_sodium
+11) sex
+12) smoking
+13) time
+14) DEATH_EVENT
+
 
