@@ -240,3 +240,42 @@ Attribute Information:
 14) DEATH_EVENT
 
 
+-----------------------
+
+transformed_healthcare
+Project Overview:
+The transformed_healthcare dataset integrates and refines raw data from multiple healthcare domains (e.g., breast cancer, heart disease, and heart failure) to deliver a cohesive, analytics-ready repository. This transformation includes extensive cleaning, normalization, and feature engineering to support advanced data analysis and risk modeling.
+
+Technical Specifications:
+
+Database: MySQL 8.0
+Hosting Environment: Azure Database for MySQL flexible server
+Tool: MySQL Workbench 8.0 CE
+Character Set: UTF8MB4
+Key Transformations:
+
+Data Cleaning: Removal of inconsistencies and imputation of missing values.
+Normalization: Standardizing data ranges for improved comparability.
+Integration: Merging diverse sources into a unified schema.
+Feature Engineering: Enhancing datasets with computed risk scores and additional metrics.
+Replication Instructions:
+
+Download the SQL Script:
+Get the latest .sql file from the main branch.
+Using MySQL Workbench:
+Open the downloaded script in MySQL Workbench.
+Connect to your MySQL server.
+Execute the script via the lightning bolt icon.
+Note: If a database named transformed_healthcare exists, either drop it or update the database name on lines 1 and 2 of the script.
+Using MySQL Command Line:
+Log into MySQL and run:
+source [/path/to/transformed_healthcare.sql];
+Ensure the database name is unique if necessary.
+Monitoring the Data Pipeline:
+Leverage MySQL Workbench's built-in performance dashboard to oversee network traffic, query execution, and overall system performance.
+
+
+----------------------
+
+
+
